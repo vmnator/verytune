@@ -15,24 +15,15 @@ router.post('/', (req, res, next) => {
     client_secret: req.body.client_secret,
   });
 
-  processDocument(tenant)
-    .then(tenant => {
-      tenant.save()
-      .then(result => {
-        res.status(200).json({
-          message: "Tenant uploaded successfully!",
-          tenant: {
-            _id: result._id,
-            tenant: tenant,
-          }
-        })  
-      })
-      .catch(err => {
-        console.log(err)
-        res.status(500).json({
-          error: err
-        });
-      })
+  tenant.save()
+    .then(result => {
+      res.status(200).json({
+        message: "Tenant uploaded successfully!",
+        tenant: {
+          _id: result._id,
+          tenant: tenant,
+        }
+      })  
     })
     .catch(err => {
       console.log(err)
