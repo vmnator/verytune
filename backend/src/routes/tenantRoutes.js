@@ -16,16 +16,23 @@ router.post('/', (req, res, next) => {
   });
 
   processDocument(tenant)
-  .then(tenant => {
-    tenant.save()
-    .then(result => {
-      res.status(200).json({
-        message: "Tenant uploaded successfully!",
-        tenant: {
-          _id: result._id,
-          tenant: tenant,
-        }
-      })  
+    .then(tenant => {
+      tenant.save()
+      .then(result => {
+        res.status(200).json({
+          message: "Tenant uploaded successfully!",
+          tenant: {
+            _id: result._id,
+            tenant: tenant,
+          }
+        })  
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(500).json({
+          error: err
+        });
+      })
     })
     .catch(err => {
       console.log(err)
@@ -33,30 +40,23 @@ router.post('/', (req, res, next) => {
         error: err
       });
     })
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({
-      error: err
-    });
-  })
 })
 
 // get all Tenants
 router.get("/", (req, res, next) => {
   Tenant.find()
-  .then(data => {
-    res.status(200).json({
-      message: "Tenant list retrieved successfully!",
-      tenant: data
-    });
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({
-      error: err
-    });
-  })
+    .then(data => {
+      res.status(200).json({
+        message: "Tenant list retrieved successfully!",
+        tenant: data
+      });
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      });
+    })
 });
 
 // get specific document by id
@@ -64,18 +64,18 @@ router.get("/:id", (req, res, next) => {
   let tenantId = req.params.id
 
   Tenant.findOne({ '_id': tenantId})
-  .then(data => {
-    res.status(200).json({
-      message: "Tenant retrieved successfully!",
-      tenant: data
-    });
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({
-      error: err
-    });
-  })
+    .then(data => {
+      res.status(200).json({
+        message: "Tenant retrieved successfully!",
+        tenant: data
+      });
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      });
+    })
 });
 
 // update tenant content based on tenant id

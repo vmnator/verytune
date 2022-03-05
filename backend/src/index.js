@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // publish API
-app.use('/api/tenants', tenantApi)
+app.use('/tenants', tenantApi)
 
 // start app
 const server = app.listen(port, () => {
