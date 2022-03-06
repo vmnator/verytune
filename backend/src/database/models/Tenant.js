@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const tenantSchema = new Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  _id: String,
   name: {
     type: String
   },

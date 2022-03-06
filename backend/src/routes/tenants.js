@@ -7,10 +7,9 @@ const router = express.Router();
 
 router.post('/', (req, res, next) => {
   const tenant = new Tenant({
-    _id: new mongoose.Types.ObjectId(),
+    _id: req.body.tenant_id,
     name: req.body.name,
     logo: req.body.logo,
-    tenant_id: req.body.tenant_id,
     client_id: req.body.client_id,
     client_secret: req.body.client_secret,
   });
@@ -74,17 +73,17 @@ router.put("/:id", (req, res, next) => {
   let tenantId = req.params.id
   
   Tenant.findOneAndUpdate({ '_id': tenantId}, req.body)
-  .then(data => {
-    res.status(200).json({
-      message: "Document updated successfully!",
-      document: data
-    });
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({
-      error: err
-    });
+    .then(data => {
+      res.status(200).json({
+        message: "Document updated successfully!",
+        document: data
+      });
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      });
     })
 });
 
@@ -93,18 +92,18 @@ router.delete("/:id", (req, res, next) => {
   let tenantId = req.params.id
 
   Tenant.deleteOne({ '_id': tenantId})
-  .then(data => {
-    res.status(200).json({
-      message: "Tenant deleted successfully!",
-      tenant: data
-    });
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({
-      error: err
-    });
-  })
+    .then(data => {
+      res.status(200).json({
+        message: "Tenant deleted successfully!",
+        tenant: data
+      });
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      });
+    })
 });
 
 module.exports = router;

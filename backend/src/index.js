@@ -6,7 +6,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const tenantApi = require('./routes/tenantRoutes')
+const tenantApi = require('./routes/tenants');
+const devicesApi = require('./routes/devices');
+
 const dockerSecret = require('./utils/dockersecret');
 const app = express();
 const port = process.env.BACKEND_PORT || 3000;
@@ -34,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // publish API
 app.use('/tenants', tenantApi)
+app.use('/devices', devicesApi)
 
 // start app
 const server = app.listen(port, () => {
